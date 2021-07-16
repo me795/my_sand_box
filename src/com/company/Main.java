@@ -7,6 +7,6 @@ public class Main {
         System.out.println(num);
         System.out.println("I'm not your first program!");
         int num2 = 1;
-        System.out.println(num2);
+
     }
 }
