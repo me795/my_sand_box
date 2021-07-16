@@ -6,5 +6,6 @@ public class Main {
 	    int num = 1;
 	    System.out.println(num);
 	    System.out.println("Hello!");
+		System.out.println("I'm your first program!");
     }
 }
