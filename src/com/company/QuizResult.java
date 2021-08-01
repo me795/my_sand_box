@@ -2,15 +2,24 @@ package com.company;
 
 public class QuizResult {
 
-    int questionCounter;
-    int successCounter;
-    int failCounter;
+    private int questionCounter;
+    private int successCounter;
 
-    public QuizResult() {
-        this.questionCounter = 0;
-        this.successCounter = 0;
-        this.failCounter =  0;
+    public void countSuccessfulAnswer() {
+        questionCounter++;
+        successCounter++;
     }
 
+    public void countFailedAnswer() {
+        questionCounter++;
+    }
+
+    public int getQuestionCounter(){
+        return questionCounter;
+    }
+
+    public int getSuccessCounter(){
+        return successCounter;
+    }
 
 }
