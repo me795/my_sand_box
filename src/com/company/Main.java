@@ -3,6 +3,7 @@ package com.company;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Function;
 
 public class Main {
 
@@ -25,12 +26,27 @@ public class Main {
 		ArrayList<Integer> secondArrayList = (ArrayList<Integer>) baseArrayList.clone();
 		ArrayList<Integer> thirdArrayList = (ArrayList<Integer>) baseArrayList.clone();
 
-		referenceExperiment(baseArrayList);
-		firstExperiment(firstArrayList);
-		secondExperiment(secondArrayList);
-		thirdExperiment(thirdArrayList);
+		experiment("Эталонная сортировка Java", baseArrayList, Main::referenceSort);
+		experiment("Эксперимент №1. Сортировка выбором",firstArrayList, Main::selectionSort);
+		experiment("Эксперимент №2. Пузырьковая сортировка",secondArrayList, Main::bubbleSort);
+		experiment("Эксперимент №3. Собственный вариант",thirdArrayList, Main::mySort);
 
     }
+
+	private static void experiment(String experimentTitle, ArrayList<Integer> list, Function<ArrayList, Void> func){
+
+		System.out.println(ANSI_BLUE + experimentTitle + ANSI_RESET);
+		printList(list, "Исходный список: ");
+
+		startTime = printTimeAndGetIt("Время начала эксперимента: ");
+
+		func.apply(list);
+		printList(list, "Результат: ");
+
+		endTime = printTimeAndGetIt("Время окончания эксперимента: ");
+		printDuration(startTime, endTime);
+
+	}
 
 	private static ArrayList<Integer> generateList(int numberOfElements){
 
@@ -46,68 +62,12 @@ public class Main {
     	return ThreadLocalRandom.current().nextInt(-32768, 32768);
 	}
 
-	private static void referenceExperiment(ArrayList<Integer> list){
-
-		System.out.println(ANSI_BLUE + "Эталонная сортировка Java" + ANSI_RESET);
-		printList(list, "Исходный список: ");
-
-		startTime = printTimeAndGetIt("Время начала эксперимента: ");
-
+	private static Void referenceSort(ArrayList<Integer> list){
 		list.sort(Comparator.naturalOrder());
-		printList(list, "Результат: ");
-
-		endTime = printTimeAndGetIt("Время окончания эксперимента: ");
-		printDuration(startTime, endTime);
+		return null;
 	}
 
-
-
-	private static void firstExperiment(ArrayList<Integer> list){
-
-		System.out.println(ANSI_BLUE + "Эксперимент №1. Сортировка выбором" + ANSI_RESET);
-		printList(list, "Исходный список: ");
-
-		startTime = printTimeAndGetIt("Время начала эксперимента: ");
-
-		selectionSort(list);
-		printList(list, "Результат: ");
-
-		endTime = printTimeAndGetIt("Время окончания эксперимента: ");
-		printDuration(startTime, endTime);
-
-	}
-
-	private static void secondExperiment(ArrayList<Integer> list){
-
-		System.out.println(ANSI_BLUE + "Эксперимент №2. Пузырьковая сортировка" + ANSI_RESET);
-		printList(list, "Исходный список: ");
-
-		startTime = printTimeAndGetIt("Время начала эксперимента: ");
-
-		bubbleSort(list);
-		printList(list, "Результат: ");
-
-		endTime = printTimeAndGetIt("Время окончания эксперимента: ");
-		printDuration(startTime, endTime);
-
-	}
-
-	private static void thirdExperiment(ArrayList<Integer> list){
-
-		System.out.println(ANSI_BLUE + "Эксперимент №3. Собственный вариант" + ANSI_RESET);
-		printList(list, "Исходный список: ");
-
-		startTime = printTimeAndGetIt("Время начала эксперимента: ");
-
-		mySort(list);
-		printList(list, "Результат: ");
-
-		endTime = printTimeAndGetIt("Время окончания эксперимента: ");
-		printDuration(startTime, endTime);
-
-	}
-
-	private static void selectionSort(ArrayList<Integer> list){
+	private static Void selectionSort(ArrayList<Integer> list){
 
     	int min;
 		int nMin;
@@ -128,9 +88,10 @@ public class Main {
 				Collections.swap(list, i, nMin);
 			}
 		}
+		return null;
 	}
 
-	private static void bubbleSort(ArrayList<Integer> list){
+	private static Void bubbleSort(ArrayList<Integer> list){
 
 		for (int i = list.size() - 1; i > 0; i--){
 			for (int j = 0; j < i; j++){
@@ -139,13 +100,15 @@ public class Main {
 				}
 			}
 		}
+
+		return null;
 	}
 
 	/*
 	По сути это доработка "Сортировки выбором" с поиском минимального и максимального значения в один проход.
 	Таким образом можно сэкономить около половины времени от изначального варианта.
 	 */
-	private static void mySort(ArrayList<Integer> list){
+	private static Void mySort(ArrayList<Integer> list){
 
     	int reminder = list.size();
     	int offset = 0;
@@ -153,6 +116,7 @@ public class Main {
 		int max;
 		int nMin;
 		int nMax;
+		int lastIndex;
 
 		do{
 
@@ -160,25 +124,29 @@ public class Main {
 			nMin = nMax = offset;
 			for (int i = offset; i < list.size() - offset; i++){
 
-				if (list.get(i) <= min){
+				if (list.get(i) < min){
 					min = list.get(i);
 					nMin = i;
-				}else if (list.get(i) >= max){
+				}else if (list.get(i) > max){
 					max = list.get(i);
 					nMax = i;
 				}
 			}
 
-			if (nMin != offset)
+			if (nMin != offset)  {
 				Collections.swap(list, nMin, offset);
-			if (nMax != list.size() - offset - 1)
-				Collections.swap(list, nMax, list.size() - offset - 1);
+			}
+			lastIndex = list.size() - offset - 1;
+			if ((nMax != lastIndex) && (list.get(nMax) == max)) {
+				Collections.swap(list, nMax, lastIndex);
+			}
 
 			reminder = reminder - 2;
 			offset++;
 
-		}while (reminder > 1);
+		}while (reminder > 0);
 
+		return null;
 	}
 
 
