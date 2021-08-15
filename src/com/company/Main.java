@@ -1,11 +1,25 @@
 package com.company;
 
+import java.sql.Time;
+import java.util.Map;
+
 public class Main {
 
     public static void main(String[] args) {
-	    int num = 1;
-	    System.out.println(num);
-	    System.out.println("Hello!");
-	    System.out.println("I'm not your first program!");
-    }
+
+		Bank bank = new Bank();
+		bank.showPartOfAccounts(10);
+		do {
+			bank.searchClientByAccount();
+		}while(needToRepeat());
+
+	}
+
+	private static boolean needToRepeat() {
+		IOController.println("Повторить поиск? (напишите \"да\" для подтверждения)");
+		String userInput = IOController.getInputString();
+		return userInput.trim().equalsIgnoreCase("да");
+	}
+
+
 }
