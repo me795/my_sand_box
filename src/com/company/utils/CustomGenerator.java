@@ -1,10 +1,16 @@
-package com.company;
+package com.company.utils;
+
+import com.company.model.Account;
+import com.company.model.Bank;
+import com.company.model.Client;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 
+//TODO: Название Custom не очень нравится
+// Может DataGenerator?
 public class CustomGenerator {
 
     public static void generateClients(Bank bank) {

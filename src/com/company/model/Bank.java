@@ -1,25 +1,38 @@
-package com.company;
+package com.company.model;
 
-import java.util.List;
+import com.company.utils.CustomGenerator;
+import com.company.utils.IOController;
+import com.company.utils.Timer;
+
 import java.util.Map;
 import java.util.TreeMap;
 
 public class Bank {
 
-    private Map<Long, Client> accounts = new TreeMap();
+    // Правильно, что интерфейс
+    // ДЗ: Поиск должен работать максимально быстро(!!!) с использованием стандартных коллекций Java.
+    // https://habr.com/ru/post/237043/
+    private Map<Long, Client> accounts = new TreeMap(); // TODO: !!! Точно TreeMap ?
 
     public Bank(){
+        //TODO: хорошо, что CustomGenerator, но лучше где-то снаружи,
+        // чтобы можно было создать и просто банк без клиентов или с другими клиентами
         CustomGenerator.generateClients(this);
     }
 
+    //TODO: переименовать putClientIntoMap -> addClient
+    // позже это может быть и не Map
+    // к названиям типов не привязывайтесь в именах переменных, методов
     public void putClientIntoMap(long accountNumber, Client client){
         accounts.put(accountNumber,client);
     }
 
+    //TODO: По ДЗ должен быть метод Client findClient(Account account)
     private Client getClientByAccount(long accountNumber){
         return accounts.get(accountNumber);
     }
 
+    // OK
     public void showPartOfAccounts(int num){
 
         IOController.println("Случайные 10 счетов: ");
@@ -29,6 +42,8 @@ public class Bank {
         myNewMap.forEach((k,v) -> IOController.println(k.toString(), IOController.FontColor.ANSI_GREEN));
     }
 
+    //TODO: выделить в отдельный класс, Bank - данные, бизнес-логика, но не взаимодействие с пользователем
+    // MVC - данные отдельно, взаимодействие с пользователем отдельно
     public void searchClientByAccount() {
         IOController.println();
         IOController.print("Введите номер счёта для поиска: ");
