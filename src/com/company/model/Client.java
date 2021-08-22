@@ -1,4 +1,6 @@
-package com.company;
+package com.company.model;
+
+import com.company.utils.IOController;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -8,7 +10,7 @@ import java.util.List;
 
 public class Client {
 
-    private List<Account> accounts = new ArrayList<>();
+    private List<Account> accounts = new ArrayList<>(); //TODO: !!! точно List?
     private String fullname;
     private Date birthday;
 
@@ -17,6 +19,7 @@ public class Client {
         this.birthday = birthday;
     }
 
+    //TODO: Если есть add, то должен быть и remove?
     public void addAccount(Account account) {
         accounts.add(account);
     }
