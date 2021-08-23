@@ -1,8 +1,8 @@
 package com.company.utils;
 
-import com.company.model.Account;
-import com.company.model.Bank;
-import com.company.model.Client;
+import com.company.models.Account;
+import com.company.models.Bank;
+import com.company.models.Client;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,11 +11,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 //TODO: Название Custom не очень нравится
 // Может DataGenerator?
-public class CustomGenerator {
+public class DataGenerator {
 
     public static void generateClients(Bank bank) {
 
-        IOController.println("Генерируем клиентов банка и их счета...", IOController.FontColor.ANSI_BLUE);
+        IO.println("Генерируем клиентов банка и их счета...", IO.FontColor.ANSI_BLUE);
 
         int numClients;
         int numAccounts = 0;
@@ -39,17 +39,17 @@ public class CustomGenerator {
             for (int j = 0; j < numClientAccounts; j++) {
                 Account account = new Account();
                 client.addAccount(account);
-                bank.putClientIntoMap(account.getNumber(), client);
+                bank.addClient(account, client);
                 numAccounts++;
             }
 
         }
 
-        IOController.print("Сгенерировано клиентов: ");
-        IOController.println(String.valueOf(numClients), IOController.FontColor.ANSI_GREEN);
-        IOController.print("Сгенерировано счетов: ");
-        IOController.println(String.valueOf(numAccounts), IOController.FontColor.ANSI_GREEN);
-        IOController.println();
+        IO.print("Сгенерировано клиентов: ");
+        IO.println(String.valueOf(numClients), IO.FontColor.ANSI_GREEN);
+        IO.print("Сгенерировано счетов: ");
+        IO.println(String.valueOf(numAccounts), IO.FontColor.ANSI_GREEN);
+        IO.println();
     }
 
     public static long generateAccountNumber() {

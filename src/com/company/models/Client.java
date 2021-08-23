@@ -1,16 +1,15 @@
-package com.company.model;
-
-import com.company.utils.IOController;
+package com.company.models;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Client {
 
-    private List<Account> accounts = new ArrayList<>(); //TODO: !!! точно List?
+    private Map<Long, Account> accounts = new HashMap(); //TODO: !!! точно List?
     private String fullname;
     private Date birthday;
 
@@ -21,7 +20,11 @@ public class Client {
 
     //TODO: Если есть add, то должен быть и remove?
     public void addAccount(Account account) {
-        accounts.add(account);
+        accounts.put(account.getNumber(),account);
+    }
+
+    public void removeAccount(Account account) {
+        accounts.remove(account.getNumber());
     }
 
     @Override
@@ -35,10 +38,7 @@ public class Client {
 
     }
 
-    public void showAccounts() {
-
-        for (Account account : accounts){
-            IOController.println(account.toString(), IOController.FontColor.ANSI_GREEN);
-        }
+    public Map<Long, Account> getAccounts() {
+        return accounts;
     }
 }
