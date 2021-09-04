@@ -10,7 +10,7 @@ public class Timer {
     public Timer(){
         Date date = new Date();
         startTime = date.getTime();
-        IOController.println("Таймер запущен...", IOController.FontColor.ANSI_BLUE);
+        IO.println("Таймер запущен...", IO.FontColor.ANSI_BLUE);
     }
 
     private void stop(){
@@ -22,7 +22,7 @@ public class Timer {
     public void showResult(){
         stop();
         long duration = stopTime - startTime;
-        IOController.println("Время, затраченное на поиск, мс.: " + duration, IOController.FontColor.ANSI_BLUE);
+        IO.println("Время, затраченное на поиск, мс.: " + duration, IO.FontColor.ANSI_BLUE);
     }
 
 

@@ -1,6 +1,6 @@
-package com.company.model;
+package com.company.models;
 
-import com.company.utils.CustomGenerator;
+import com.company.utils.DataGenerator;
 
 public class Account {
 
@@ -16,7 +16,11 @@ public class Account {
 //    }
 
     public Account() {
-        this(CustomGenerator.generateAccountNumber(), CustomGenerator.generateAmount());
+        this(DataGenerator.generateAccountNumber(), DataGenerator.generateAmount());
+    }
+
+    public Account(long number) {
+        this.number = number;
     }
 
     public Account(long number, int amount) {

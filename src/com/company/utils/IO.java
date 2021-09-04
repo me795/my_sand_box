@@ -2,7 +2,7 @@ package com.company.utils;
 
 import java.util.Scanner;
 
-public class IOController {
+public class IO {
 
     public enum FontColor {
 
